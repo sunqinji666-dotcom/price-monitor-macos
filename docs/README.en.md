@@ -29,7 +29,7 @@ It never places orders or payments. Selecting a product simply opens that produc
 
 ## Quick start
 
-1. Download `价格监控-v1.4-macOS-arm64.zip` from [Releases](../../releases/latest), unzip it, and move the app to Applications.
+1. Download `PriceMonitor-v1.4-macOS-arm64.zip` from [Releases](../../releases/latest), unzip it, and move the app to Applications.
 2. Open the app once. To start it automatically after login, install the user-level template in `LaunchAgent.plist`.
 3. Open **WOYAO Usage**, paste your API key, and choose **Save to Documents and Read**.
 4. The key is stored only at `Documents/价格监控/woyao-api-key.txt`; storefront monitoring needs no login.
@@ -62,7 +62,7 @@ The script creates `价格监控.app`. Local build output is ignored by Git; use
 Each release includes an arm64 macOS archive and a `.sha256` file. Verify the downloaded archive with:
 
 ```zsh
-shasum -a 256 价格监控-v1.4-macOS-arm64.zip
+shasum -a 256 PriceMonitor-v1.4-macOS-arm64.zip
 ```
 
 Compare the result with the SHA-256 file in the same release.
