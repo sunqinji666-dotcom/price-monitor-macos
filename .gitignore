@@ -1,0 +1,10 @@
+.DS_Store
+.build/
+价格监控.app/
+dist/
+*.log
+*.ips
+*.zip
+woyao-api-key.txt
+.env
+.env.*
