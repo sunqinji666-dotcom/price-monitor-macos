@@ -57,6 +57,10 @@ macOS, Xcode Command Line Tools, and Swift 6 are required.
 
 The script creates `价格监控.app`. Local build output is ignored by Git; use Release assets for distribution.
 
+## License
+
+This project is released under the [MIT License](../LICENSE). You may use, copy, modify, commercially use, and redistribute it, provided that the copyright and license notice are retained.
+
 ## Downloads and verification
 
 Each release includes an arm64 macOS archive and a `.sha256` file. Verify the downloaded archive with:
@@ -71,4 +75,3 @@ Compare the result with the SHA-256 file in the same release.
 
 - Only Apple Silicon (arm64) is built and verified.
 - The app is locally signed but not Apple-notarized; on first launch you may need to Control-click it in Finder and choose Open.
-- No license is included. Do not assume redistribution or commercial-use rights.
