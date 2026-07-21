@@ -26,4 +26,4 @@ Data toko dibaca dari API publik. Kunci WOYAO hanya disimpan di `Documents/价�
 
 macOS, Xcode Command Line Tools, dan Swift 6 diperlukan. Jalankan `./build_app.sh` untuk membuat `价格监控.app`.
 
-Proyek ini menggunakan [MIT License](../LICENSE). Penulis dan kontak: Jacksun（孙秦吉）· [qinji@jack-sun.com](mailto:qinji@jack-sun.com).
+Proyek ini menggunakan [MIT License](../LICENSE).
