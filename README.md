@@ -2,13 +2,15 @@
 
 > 一个常驻 macOS 菜单栏的小工具：对比指定店铺商品价格与库存，并显示 WOYAO API 余额和最近调用。
 
-**简体中文** · [English](docs/README.en.md) · [日本語](docs/README.ja.md)
+**简体中文** · [繁體中文](docs/README.zh-TW.md) · [English](docs/README.en.md) · [日本語](docs/README.ja.md) · [한국어](docs/README.ko.md) · [Español](docs/README.es.md) · [Français](docs/README.fr.md) · [Deutsch](docs/README.de.md) · [Português](docs/README.pt-BR.md) · [Русский](docs/README.ru.md) · [العربية](docs/README.ar.md) · [हिन्दी](docs/README.hi.md) · [Bahasa Indonesia](docs/README.id.md)
+
+作者与联系：**Jacksun（孙秦吉）** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
 
 ![价格监控概念主视觉：深色 macOS 风格仪表盘、价格标签、余额卡片和提醒铃铛。](docs/assets/price-monitor-hero.png)
 
-| 当前版本 | 平台 | 架构 | 许可证 |
+| 当前版本 | 支持系统 | 架构 | 许可证 |
 | --- | --- | --- | --- |
-| v1.4 | macOS 14+ | Apple Silicon | 未附许可证 |
+| v1.4 | macOS 14+ | Apple 芯片 | MIT License |
 
 [下载最新版本](../../releases/latest) · [快速开始](#一分钟上手) · [收藏项目](../../stargazers)
 
@@ -74,7 +76,7 @@ WOYAO 用量接口 ────┘                 └─ 菜单栏余额 / 每�
 ```text
 Sources/PriceMonitor/  SwiftUI 应用与接口逻辑
 Assets/                应用图标源文件
-docs/                  英文、日文 README 与发布视觉
+docs/                  12 种语言 README 与发布视觉
 build_app.sh           生成 macOS .app 的脚本
 LaunchAgent.plist      登录启动项模板
 ```
