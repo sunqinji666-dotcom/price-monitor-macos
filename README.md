@@ -89,6 +89,10 @@ LaunchAgent.plist      登录启动项模板
 
 构建结果为 `价格监控.app`。本地开发产物被 `.gitignore` 排除；正式发布包由 Release 提供。
 
+## 许可证
+
+本项目采用 [MIT License](LICENSE)。任何人都可以自由使用、复制、修改、商业使用和再次发布，但需保留版权与许可声明。
+
 ## 下载与校验
 
 发布资产包含 macOS arm64 压缩包及对应 `.sha256` 文件。下载后可在终端核验：
@@ -103,4 +107,3 @@ shasum -a 256 PriceMonitor-v1.4-macOS-arm64.zip
 
 - 当前只构建并验证 Apple Silicon（arm64）版本。
 - 应用为本地自签名构建，未进行 Apple 公证；首次打开可能需要在 Finder 中按住 Control 点击并选择“打开”。
-- 未附许可证；在获得明确许可前，请不要假定可以再分发或商用。
