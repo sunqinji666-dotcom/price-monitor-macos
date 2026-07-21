@@ -4,8 +4,6 @@
 
 [简体中文](../README.md) · [English](README.en.md) · [日本語](README.ja.md) · **한국어**
 
-제작 및 문의: **Jacksun (孙秦吉)** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
-
 ![어두운 macOS 스타일 모니터, 가격표, 잔액 카드, 알림 벨을 담은 콘셉트 일러스트](assets/price-monitor-hero.png)
 
 | 릴리스 | 플랫폼 | 아키텍처 | 라이선스 |

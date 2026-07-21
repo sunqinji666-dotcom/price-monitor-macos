@@ -26,4 +26,4 @@ Les données des boutiques proviennent d’API publiques. La clé WOYAO est stoc
 
 macOS, Xcode Command Line Tools et Swift 6 sont nécessaires. Exécutez `./build_app.sh` pour créer `价格监控.app`.
 
-Ce projet est publié sous [MIT License](../LICENSE). Auteur et contact : Jacksun（孙秦吉）· [qinji@jack-sun.com](mailto:qinji@jack-sun.com).
+Ce projet est publié sous [MIT License](../LICENSE).

@@ -4,8 +4,6 @@
 
 [简体中文](../README.md) · **English** · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-Created by **Jacksun (孙秦吉)** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
-
 ![Concept illustration: a dark macOS-style monitor, a price tag, a balance card, and an alert bell.](assets/price-monitor-hero.png)
 
 | Release | Platform | Architecture | License |

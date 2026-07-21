@@ -26,4 +26,4 @@
 
 需要 macOS、Xcode Command Line Tools 與 Swift 6。執行 `./build_app.sh` 產生 `价格监控.app`。
 
-本專案採用 [MIT License](../LICENSE)。作者與聯絡方式：Jacksun（孫秦吉）· [qinji@jack-sun.com](mailto:qinji@jack-sun.com)。
+本專案採用 [MIT License](../LICENSE)。

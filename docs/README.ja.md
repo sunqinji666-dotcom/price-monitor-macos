@@ -4,8 +4,6 @@
 
 [简体中文](../README.md) · [English](README.en.md) · **日本語** · [한국어](README.ko.md)
 
-作者・お問い合わせ：**Jacksun（孙秦吉）** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
-
 ![ダークな macOS 風モニター、価格タグ、残高カード、通知ベルのコンセプトイラスト。](assets/price-monitor-hero.png)
 
 | リリース | 対応環境 | アーキテクチャ | ライセンス |
