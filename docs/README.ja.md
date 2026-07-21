@@ -29,7 +29,7 @@
 
 ## クイックスタート
 
-1. [Releases](../../releases/latest) から `价格监控-v1.4-macOS-arm64.zip` をダウンロードし、展開して「アプリケーション」へ移動します。
+1. [Releases](../../releases/latest) から `PriceMonitor-v1.4-macOS-arm64.zip` をダウンロードし、展開して「アプリケーション」へ移動します。
 2. 一度アプリを開きます。ログイン時に自動起動したい場合は、`LaunchAgent.plist` のユーザー用テンプレートを導入します。
 3. **WOYAO 用量** を開き、API Key を貼り付けて **保存到文档并读取** を選択します。
 4. Key は `Documents/价格监控/woyao-api-key.txt` のみに保存されます。ショップ監視にはログイン不要です。
@@ -62,7 +62,7 @@ macOS、Xcode Command Line Tools、Swift 6 が必要です。
 各 Release には arm64 macOS アーカイブと `.sha256` ファイルが含まれます。以下で検証できます。
 
 ```zsh
-shasum -a 256 价格监控-v1.4-macOS-arm64.zip
+shasum -a 256 PriceMonitor-v1.4-macOS-arm64.zip
 ```
 
 同じ Release の SHA-256 ファイルと結果を比較してください。

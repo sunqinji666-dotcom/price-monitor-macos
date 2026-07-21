@@ -29,7 +29,7 @@
 
 ## 一分钟上手
 
-1. 在 [Releases](../../releases/latest) 下载 `价格监控-v1.4-macOS-arm64.zip`，解压后拖入“应用程序”。
+1. 在 [Releases](../../releases/latest) 下载 `PriceMonitor-v1.4-macOS-arm64.zip`，解压后拖入“应用程序”。
 2. 首次打开应用。若需要登录后自动启动，可按项目内 `LaunchAgent.plist` 安装用户级启动项。
 3. 打开“WOYAO 用量”，粘贴 API Key 并点击“保存到文档并读取”。
 4. Key 仅保存到 `文档/价格监控/woyao-api-key.txt`；商品监控无需登录。
@@ -94,7 +94,7 @@ LaunchAgent.plist      登录启动项模板
 发布资产包含 macOS arm64 压缩包及对应 `.sha256` 文件。下载后可在终端核验：
 
 ```zsh
-shasum -a 256 价格监控-v1.4-macOS-arm64.zip
+shasum -a 256 PriceMonitor-v1.4-macOS-arm64.zip
 ```
 
 请将输出与 Release 中的 SHA-256 文件比对。

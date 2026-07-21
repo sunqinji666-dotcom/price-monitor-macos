@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 
 VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Info.plist)"
 ARCH="arm64"
-ARCHIVE_NAME="价格监控-v${VERSION}-macOS-${ARCH}.zip"
+ARCHIVE_NAME="PriceMonitor-v${VERSION}-macOS-${ARCH}.zip"
 
 ./build_app.sh
 mkdir -p dist
