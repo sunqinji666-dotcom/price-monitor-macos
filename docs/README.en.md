@@ -2,13 +2,15 @@
 
 > A macOS menu-bar utility for comparing storefront prices and stock while tracking WOYAO API balance and recent usage.
 
-[简体中文](../README.md) · **English** · [日本語](README.ja.md)
+[简体中文](../README.md) · **English** · [日本語](README.ja.md) · [한국어](README.ko.md)
+
+Created by **Jacksun (孙秦吉)** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
 
 ![Concept illustration: a dark macOS-style monitor, a price tag, a balance card, and an alert bell.](assets/price-monitor-hero.png)
 
 | Release | Platform | Architecture | License |
 | --- | --- | --- | --- |
-| v1.4 | macOS 14+ | Apple Silicon | No license included |
+| v1.4 | macOS 14+ | Apple Silicon | MIT License |
 
 [Download latest release](../../releases/latest) · [Quick start](#quick-start) · [Star this project](../../stargazers)
 
