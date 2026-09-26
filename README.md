@@ -1,6 +1,6 @@
 # 价格监控
 
-> 一个常驻 macOS 菜单栏的小工具：对比指定店铺商品价格与库存，并显示 WOYAO API 余额和最近调用。
+> 一个常驻 macOS 菜单栏的小工具：对比指定店铺商品价格与库存，并显示 RightAPI 账户余额。
 
 **简体中文** · [繁體中文](docs/README.zh-TW.md) · [English](docs/README.en.md) · [日本語](docs/README.ja.md) · [한국어](docs/README.ko.md) · [Español](docs/README.es.md) · [Français](docs/README.fr.md) · [Deutsch](docs/README.de.md) · [Português](docs/README.pt-BR.md) · [Русский](docs/README.ru.md) · [العربية](docs/README.ar.md) · [हिन्दी](docs/README.hi.md) · [Bahasa Indonesia](docs/README.id.md)
 
@@ -10,7 +10,7 @@ Contact: **Jacksun** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
 
 | 当前版本 | 支持系统 | 架构 | 许可证 |
 | --- | --- | --- | --- |
-| v1.4 | macOS 14+ | Apple 芯片 | MIT License |
+| v1.5 | macOS 14+ | Apple 芯片 | MIT License |
 
 [下载最新版本](../../releases/latest) · [快速开始](#一分钟上手) · [收藏项目](../../stargazers)
 
@@ -22,10 +22,12 @@ Contact: **Jacksun** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
 
 ## 为什么有用
 
-- 三家店铺的同类商品自动分组，组内按价格从低到高排列。
-- 每分钟检查商品；有新的在售商品或补货时使用 macOS 语音播报。
-- 菜单栏直接显示 WOYAO 当前余额，不用打开网页。
-- WOYAO 每小时播报余额、已用额度和今日消费。
+- 四家店铺的全量商品自动分组，逐页读取直到服务端总数完成，组内按价格从低到高排列。
+- 每分钟检查商品；有新的在售商品或补货时发送静默的 macOS 通知。
+- 菜单栏直接显示 RightAPI 当前余额，不用打开网页。
+- RightAPI 按设定间隔静默通知余额、累计充值与累计消费。
+- 设置页可统一开启或关闭定时监控，三类监控均可自定义 1–1440 分钟间隔，并分别控制系统通知、语音音色、余额播报、商品上架/补货播报及是否读出商品价格。
+- 语音选择器优先列出这台 Mac 已安装的推荐中文音色（婷婷、Flo、Sandy、Shelley、Reed、Eddy），全部使用本地语音合成。
 - 最近 10 条调用列出模型、费用、Token 与时间，方便核对实际消耗。
 - 兼容服务端数值、字符串和空值字段；调用日志异常不会挡住余额显示。
 
@@ -33,15 +35,15 @@ Contact: **Jacksun** · [qinji@jack-sun.com](mailto:qinji@jack-sun.com)
 
 1. 在 [Releases](../../releases/latest) 下载 `PriceMonitor-v1.4-macOS-arm64.zip`，解压后拖入“应用程序”。
 2. 首次打开应用。若需要登录后自动启动，可按项目内 `LaunchAgent.plist` 安装用户级启动项。
-3. 打开“WOYAO 用量”，粘贴 API Key 并点击“保存到文档并读取”。
-4. Key 仅保存到 `文档/价格监控/woyao-api-key.txt`；商品监控无需登录。
+3. 打开“RightAPI 余额”，粘贴 API Key 并点击“保存到文档并读取”。
+4. Key 仅保存到 `文档/价格监控/rightapi-api-key.txt`；旧 `right-codes-api-key.txt` 会自动兼容读取；商品监控无需登录。
 
 ## 工作方式
 
 ```text
 公开店铺商品接口 ─┐
-                   ├─ 本地价格监控 ── 商品分组 / 新货语音播报 / 浏览器购买页
-WOYAO 用量接口 ────┘                 └─ 菜单栏余额 / 每小时用量播报 / 最近 10 条调用
+                   ├─ 本地价格监控 ── 商品分组 / 新货通知 / 浏览器购买页
+RightAPI 账户接口 ───┘                 └─ 菜单栏余额 / 定时余额通知
 ```
 
 上图为功能流程，页面主视觉为概念示意，不包含真实账号、余额或调用数据。
@@ -55,12 +57,14 @@ WOYAO 用量接口 ────┘                 └─ 菜单栏余额 / 每�
 - `https://pay.ldxp.cn/shop/2GO2Z6GD`
 - `https://pay.ldxp.cn/shop/K1PKHQ1F`
 - `https://pay.ldxp.cn/shop/mlxggpt`
+- `https://pay.ldxp.cn/shop/9RAXVWMP`（RightAPI）
+- `https://priceai.cc/products/chatgpt-team-business`（PriceAI 聚合的 ChatGPT Team / Business 报价）
 
-新上架的商品会显示；下架商品会在下一次刷新后消失。缺货商品保留为“缺货”状态，重新有货也会被视为新货播报。
+新上架的商品会显示；程序根据接口的总数自动读取所有分页，不会只停在第一页。下架商品会在下一次刷新后消失。缺货商品保留为“缺货”状态，重新有货也会发送静默通知。
 
-### WOYAO 用量
+### RightAPI 余额
 
-需要用户自行提供有效 API Key。应用读取余额、额度、今日/累计消费与最近 10 条调用；它不会帮你下单、充值、调用模型或修改远端账号设置。
+需要用户自行提供有效 API Key。应用读取账户余额、累计充值与累计消费；它不会帮你下单、充值、调用模型或修改远端账号设置。
 
 ## 隐私
 

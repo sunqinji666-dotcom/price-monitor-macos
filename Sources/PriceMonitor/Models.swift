@@ -9,11 +9,25 @@ struct Shop: Identifiable, Hashable {
     static let defaults = [
         Shop(token: "2GO2Z6GD", displayName: "ppgpt"),
         Shop(token: "K1PKHQ1F", displayName: "Yonnani"),
-        Shop(token: "mlxggpt", displayName: "麻辣香锅AI杂货铺")
+        Shop(token: "mlxggpt", displayName: "麻辣香锅AI杂货铺"),
+        Shop(token: "9RAXVWMP", displayName: "RightAPI")
     ]
 }
 
 struct Product: Identifiable, Hashable {
+    /// 设置页可用的语音播报分类，与比较分组保持一致。
+    static let speechCategories = [
+        "ChatGPT Plus",
+        "ChatGPT Pro",
+        "ChatGPT Team / Business",
+        "Gemini",
+        "Grok",
+        "Codex 接码",
+        "接码服务",
+        "邮箱",
+        "其他"
+    ]
+
     let id: String
     let shop: Shop
     let name: String
@@ -28,6 +42,7 @@ struct Product: Identifiable, Hashable {
     /// 将不同店铺的同类商品放到同一列，便于直接比价。
     var comparisonGroup: String {
         let text = "\(name) \(category)".lowercased()
+        if text.contains("team") || text.contains("k12") || text.contains("bug team") { return "ChatGPT Team / Business" }
         if text.contains("codex") && text.contains("接码") { return "Codex 接码" }
         if text.contains("gemini") { return "Gemini" }
         if text.contains("grok") { return "Grok" }
@@ -42,11 +57,12 @@ struct Product: Identifiable, Hashable {
         switch comparisonGroup {
         case "ChatGPT Plus": return 0
         case "ChatGPT Pro": return 1
-        case "Gemini": return 2
-        case "Grok": return 3
-        case "Codex 接码": return 4
-        case "接码服务": return 5
-        case "邮箱": return 6
+        case "ChatGPT Team / Business": return 2
+        case "Gemini": return 3
+        case "Grok": return 4
+        case "Codex 接码": return 5
+        case "接码服务": return 6
+        case "邮箱": return 7
         default: return 99
         }
     }

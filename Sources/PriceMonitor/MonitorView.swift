@@ -9,10 +9,69 @@ struct MonitorView: View {
             StorePriceView()
                 .environmentObject(monitor)
                 .tabItem { Label("商品价格", systemImage: "tag") }
-            WoyaoUsageView()
-                .tabItem { Label("WOYAO 用量", systemImage: "chart.line.uptrend.xyaxis") }
+            RightAPIUsageView()
+                .tabItem { Label("RightAPI 余额", systemImage: "chart.line.uptrend.xyaxis") }
+            StoreVerificationView()
+                .environmentObject(monitor)
+                .tabItem { Label("网站验证", systemImage: monitor.requiresVerification ? "checkmark.shield.fill" : "checkmark.shield") }
+            AppSettingsView()
+                .environmentObject(monitor)
+                .tabItem { Label("设置", systemImage: "gearshape") }
         }
         .padding(.top, 4)
+        .background(WindowCloseToBackgroundHandler())
+    }
+}
+
+/// 接管 SwiftUI 原生窗口：关闭时隐藏到后台（Dock 图标消失），显示时恢复 Dock 图标。
+private struct WindowCloseToBackgroundHandler: NSViewRepresentable {
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async {
+            guard let window = view.window else { return }
+            context.coordinator.attach(to: window)
+        }
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {
+        DispatchQueue.main.async {
+            guard let window = nsView.window else { return }
+            context.coordinator.attach(to: window)
+        }
+    }
+
+    @MainActor final class Coordinator: NSObject, NSWindowDelegate {
+        weak var window: NSWindow?
+
+        func attach(to window: NSWindow) {
+            guard self.window !== window else { return }
+            self.window?.delegate = nil
+            self.window = window
+            window.identifier = NSUserInterfaceItemIdentifier("monitor")
+            window.isReleasedWhenClosed = false
+            AppDelegate.shared?.mainWindow = window
+            window.delegate = self
+            // 窗口创建晚于代理回调时，这里补一次前台激活，确保 Dock 图标出现。
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self, weak window] in
+                guard let window, window.isVisible, !CommandLine.arguments.contains("-background") else { return }
+                self?.windowDidBecomeKey(Notification(name: NSWindow.didBecomeKeyNotification, object: window))
+            }
+        }
+
+        func windowDidBecomeKey(_ notification: Notification) {
+            NSApp.setActivationPolicy(.regular)
+            NSApp.activate(ignoringOtherApps: true)
+        }
+
+        func windowShouldClose(_ sender: NSWindow) -> Bool {
+            sender.orderOut(nil)
+            // 窗口隐藏后隐藏 Dock 图标，程序继续留在右上角菜单栏。
+            NSApp.setActivationPolicy(.accessory)
+            return false
+        }
     }
 }
 
@@ -64,14 +123,11 @@ private struct StorePriceView: View {
                 Text(statusText).font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            Picker("自动刷新", selection: $monitor.autoRefreshMinutes) {
-                Text("仅手动").tag(0)
-                Text("每 1 分钟").tag(1)
-                Text("每 5 分钟").tag(5)
-                Text("每 15 分钟").tag(15)
-            }
-            .labelsHidden()
-            .frame(width: 100)
+            TextField("分钟", value: $monitor.autoRefreshMinutes, format: .number)
+                .textFieldStyle(.roundedBorder)
+                .multilineTextAlignment(.trailing)
+                .frame(width: 52)
+            Text("分钟").font(.caption).foregroundStyle(.secondary)
             .onChange(of: monitor.autoRefreshMinutes) { _, _ in monitor.configureAutoRefresh() }
             Button { monitor.refresh() } label: {
                 Label(monitor.isRefreshing ? "刷新中" : "刷新", systemImage: "arrow.clockwise")
@@ -91,6 +147,7 @@ private struct StorePriceView: View {
             Picker("店铺", selection: $selectedShop) {
                 Text("全部店铺").tag("全部店铺")
                 ForEach(Shop.defaults) { Text($0.displayName).tag($0.displayName) }
+                Text("PriceAI · Team/Business").tag("PriceAI · Team/Business")
             }.frame(width: 150)
             Picker("库存", selection: $stockFilter) {
                 ForEach(StockFilter.allCases) { Text($0.rawValue).tag($0) }
@@ -104,7 +161,7 @@ private struct StorePriceView: View {
         if let error = monitor.errorMessage, monitor.products.isEmpty {
             ContentUnavailableView("刷新失败", systemImage: "wifi.exclamationmark", description: Text(error))
         } else if monitor.products.isEmpty {
-            ProgressView("正在读取三家店铺…")
+            ProgressView("正在读取四家店铺…")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
             List {
@@ -146,7 +203,7 @@ private struct StorePriceView: View {
     }
 
     private var statusText: String {
-        if monitor.isRefreshing { return "正在更新三家店铺…" }
+        if monitor.isRefreshing { return "正在更新四家店铺…" }
         guard let date = monitor.lastUpdated else { return "等待刷新" }
         let available = monitor.products.filter(\.inStock).count
         return "更新于 \(date.formatted(date: .omitted, time: .shortened)) · \(available) 件有货"
